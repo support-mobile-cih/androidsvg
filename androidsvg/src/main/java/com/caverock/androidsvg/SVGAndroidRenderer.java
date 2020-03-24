@@ -1372,6 +1372,15 @@ class SVGAndroidRenderer {
             }
         }
 
+        // Handle text alignment
+        Style.DominantBaseline baseline = state.style.dominantBaseline;
+
+        if (baseline == Style.DominantBaseline.Middle) {
+            y+= Math.round(state.style.fontSize.value / 2.0);
+        } else if  (baseline == Style.DominantBaseline.Hanging) {
+            y+= Math.round(state.style.fontSize.value);
+        }
+
         if (obj.boundingBox == null) {
             TextBoundsCalculator proc = new TextBoundsCalculator(x, y);
             enumerateTextSpans(obj, proc);

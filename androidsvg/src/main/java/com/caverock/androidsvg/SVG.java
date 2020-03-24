@@ -1122,6 +1122,7 @@ public class SVG {
         TextDirection direction;
 
         TextAnchor textAnchor;
+        DominantBaseline dominantBaseline;
 
         Boolean overflow;  // true if overflow visible
         CSSClipRect clip;
@@ -1179,6 +1180,12 @@ public class SVG {
             Normal,
             Italic,
             Oblique
+        }
+
+        public enum DominantBaseline {
+            Baseline,
+            Middle,
+            Hanging
         }
 
         public enum TextAnchor {

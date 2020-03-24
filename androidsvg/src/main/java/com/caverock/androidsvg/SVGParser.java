@@ -240,6 +240,7 @@ class SVGParser
       color,
       cx, cy,
       direction,
+      dominant_baseline,
       dx, dy,
       fx, fy,
       d,
@@ -3163,6 +3164,12 @@ class SVGParser
                style.specifiedFlags |= SVG.SPECIFIED_DIRECTION;
             break;
 
+         case dominant_baseline:
+            style.dominantBaseline = parseDominantBaseline(val);
+            if (style.dominantBaseline != null)
+               style.specifiedFlags |= SVG.SPECIFIED_TEXT_ANCHOR;
+            break;
+
          case text_anchor:
             style.textAnchor = parseTextAnchor(val);
             if (style.textAnchor != null)
@@ -4075,6 +4082,17 @@ class SVGParser
       return dashes.toArray(new Length[dashes.size()]);
    }
 
+   // Parse a text anchor keyword
+   private static Style.DominantBaseline  parseDominantBaseline(String val)
+   {
+      switch (val)
+      {
+         case "baseline":  return Style.DominantBaseline.Baseline;
+         case "middle": return Style.DominantBaseline.Middle;
+         case "hanging":    return Style.DominantBaseline.Hanging;
+         default:       return null;
+      }
+   }
 
    // Parse a text anchor keyword
    private static Style.TextAnchor  parseTextAnchor(String val)
@@ -4087,7 +4105,6 @@ class SVGParser
          default:       return null;
       }
    }
-
 
    // Parse a text anchor keyword
    private static Boolean  parseOverflow(String val)
