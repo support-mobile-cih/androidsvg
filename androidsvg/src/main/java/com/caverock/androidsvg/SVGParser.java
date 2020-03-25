@@ -3167,7 +3167,7 @@ class SVGParser
          case dominant_baseline:
             style.dominantBaseline = parseDominantBaseline(val);
             if (style.dominantBaseline != null)
-               style.specifiedFlags |= SVG.SPECIFIED_TEXT_ANCHOR;
+               style.specifiedFlags |= SVG.SPECIFIED_DOMINANT_BASELINE;
             break;
 
          case text_anchor:

@@ -1082,6 +1082,7 @@ public class SVG {
     static final long SPECIFIED_VECTOR_EFFECT = (1L << 35);
     static final long SPECIFIED_DIRECTION = (1L << 36);
     static final long SPECIFIED_IMAGE_RENDERING = (1L << 37);
+    static final long SPECIFIED_DOMINANT_BASELINE = (1L << 38);
 
     private static final long SPECIFIED_ALL = 0xffffffff;
 
@@ -1242,6 +1243,7 @@ public class SVG {
             def.textDecoration = TextDecoration.None;
             def.direction = TextDirection.LTR;
             def.textAnchor = TextAnchor.Start;
+            def.dominantBaseline = DominantBaseline.Baseline;
             def.overflow = true;  // Overflow shown/visible for root, but not for other elements (see section 14.3.3).
             def.clip = null;
             def.markerStart = null;

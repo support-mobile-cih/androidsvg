@@ -1375,11 +1375,15 @@ class SVGAndroidRenderer {
         // Handle text alignment
         Style.DominantBaseline baseline = state.style.dominantBaseline;
 
-        if (baseline == Style.DominantBaseline.Middle) {
-            y-= Math.round(state.style.fontSize.value / 2.0);
-        } else if  (baseline == Style.DominantBaseline.Hanging) {
-            y-= Math.round(state.style.fontSize.value);
+        if (baseline != Style.DominantBaseline.Baseline) {
+            float textHeight = calculateTextHeight(obj);
+            if (baseline == Style.DominantBaseline.Middle) {
+                y += textHeight / 3;
+            } else {
+                y += textHeight / 1.5;
+            }
         }
+
 
         if (obj.boundingBox == null) {
             TextBoundsCalculator proc = new TextBoundsCalculator(x, y);
@@ -1663,6 +1667,23 @@ class SVGAndroidRenderer {
         }
     }
 
+    private float calculateTextHeight(TextContainer parentTextObj) {
+        TextHeightCalculator proc = new TextHeightCalculator();
+        enumerateTextSpans(parentTextObj, proc);
+        return proc.y;
+    }
+
+    private class TextHeightCalculator extends TextProcessor {
+        float y = 0;
+
+        @Override
+        public void processText(String text) {
+            android.graphics.Rect rect = new android.graphics.Rect();
+            state.fillPaint.getTextBounds(text, 0, text.length(), rect);
+
+            y = rect.height();
+        }
+    }
 
     //==============================================================================
 
@@ -2199,6 +2220,10 @@ class SVGAndroidRenderer {
 
         if (isSpecified(style, SVG.SPECIFIED_TEXT_ANCHOR)) {
             state.style.textAnchor = style.textAnchor;
+        }
+
+        if (isSpecified(style, SVG.SPECIFIED_DOMINANT_BASELINE)) {
+            state.style.dominantBaseline = style.dominantBaseline;
         }
 
         if (isSpecified(style, SVG.SPECIFIED_OVERFLOW)) {
