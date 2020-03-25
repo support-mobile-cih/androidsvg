@@ -1376,9 +1376,9 @@ class SVGAndroidRenderer {
         Style.DominantBaseline baseline = state.style.dominantBaseline;
 
         if (baseline == Style.DominantBaseline.Middle) {
-            y+= Math.round(state.style.fontSize.value / 2.0);
+            y-= Math.round(state.style.fontSize.value / 2.0);
         } else if  (baseline == Style.DominantBaseline.Hanging) {
-            y+= Math.round(state.style.fontSize.value);
+            y-= Math.round(state.style.fontSize.value);
         }
 
         if (obj.boundingBox == null) {
